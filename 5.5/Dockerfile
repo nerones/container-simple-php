@@ -3,7 +3,7 @@ RUN apt-get update \
     && apt-get install -y libjpeg-dev libpng12-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
-    && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/
+    && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install mysql mysqli pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
     && pecl install -o -f xdebug \
     && rm -rf /tmp/pear \
