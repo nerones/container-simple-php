@@ -1,4 +1,4 @@
-FROM php:5.5.23-apache
+FROM php:5.5.27-apache
 RUN apt-get update \
     && apt-get install -y libjpeg-dev libpng12-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
