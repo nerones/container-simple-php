@@ -58,9 +58,7 @@ RUN buildDeps=" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
 		$PHP_EXTRA_CONFIGURE_ARGS \
 		--disable-cgi \
-		--enable-mysqlnd \
 		--with-curl \
-		--with-openssl \
 		--with-pcre \
 		--with-readline \
 		--with-recode \
@@ -86,7 +84,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install mysql mysqli pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
+    && docker-php-ext-install pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
     && pecl install -o -f xdebug \
     && rm -rf /tmp/pear \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini
