@@ -1,11 +1,12 @@
-FROM php:5.5.30-apache
+FROM php:5.5.31-apache
 RUN apt-get update \
     && apt-get install -y libjpeg-dev libpng12-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install mysql mysqli pdo_mysql pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
-    && pecl install -o -f xdebug \
+    && pecl install -o -f xdebug apcu-4.0.10 \
     && rm -rf /tmp/pear \
+    && echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./php.ini /usr/local/etc/php/
