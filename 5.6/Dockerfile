@@ -1,6 +1,6 @@
 FROM php:5.6.17-apache
 RUN apt-get update \
-    && apt-get install -y libjpeg-dev libpng12-dev libpq-dev libmcrypt-dev --no-install-recommends \
+    && apt-get install -y libjpeg-dev libpng12-dev libsqlite3-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
