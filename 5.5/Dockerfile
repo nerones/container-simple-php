@@ -4,7 +4,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install mysql mysqli pdo_mysql pdo_sqlite pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
+    && docker-php-ext-install curl mysql mysqli pdo_mysql pdo_sqlite pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
     && pecl install -o -f xdebug apcu-4.0.10 \
     && rm -rf /tmp/pear \
     && echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
