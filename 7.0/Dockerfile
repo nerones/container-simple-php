@@ -1,4 +1,4 @@
-FROM php:7.0.2-apache
+FROM php:7.0.3-apache
 RUN apt-get update \
     && apt-get install -y libcurl4-gnutls-dev libpng12-dev libpq-dev libsqlite3-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
