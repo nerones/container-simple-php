@@ -80,7 +80,7 @@ EXPOSE 80
 ## custom
 
 RUN apt-get update \
-    && apt-get install -y libjpeg-dev libpng12-dev libpq-dev libmcrypt-dev --no-install-recommends \
+    && apt-get install -y libjpeg-dev libpng12-dev libmysqld-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
