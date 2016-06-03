@@ -50,7 +50,7 @@ RUN buildDeps=" \
 	&& curl -SL "http://museum.php.net/php5/php-5.3.17.tar.bz2" -o php.tar.bz2 \
 #	&& curl -SL "http://php.net/distributions/php-$PHP_VERSION.tar.bz2.asc" -o php.tar.bz2.asc \
 	&& mkdir -p /usr/src/php \
-	&& tar -xf -C /usr/src/php --strip-components=1 \
+	&& tar -xof php.tar.bz2 -C /usr/src/php --strip-components=1 \
 	&& rm php.tar.bz2* \
 	&& cd /usr/src/php \
 	&& ./configure \
