@@ -46,23 +46,31 @@ RUN buildDeps=" \
 		libxml2-dev \
 	" \
 	&& set -x \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update \
+        && apt-get install -y $buildDeps --no-install-recommends \
+        && apt-get install -y libjpeg-dev libpng12-dev libmysqld-dev libpq-dev libmcrypt-dev --no-install-recommends \
+        && rm -rf /var/lib/apt/lists/* \
 	&& curl -SL "http://museum.php.net/php5/php-5.3.17.tar.bz2" -o php.tar.bz2 \
 #	&& curl -SL "http://php.net/distributions/php-$PHP_VERSION.tar.bz2.asc" -o php.tar.bz2.asc \
 	&& mkdir -p /usr/src/php \
 	&& tar -xof php.tar.bz2 -C /usr/src/php --strip-components=1 \
 	&& rm php.tar.bz2* \
-	&& cd /usr/src/php \
-	&& ./configure \
+	&& cd /usr/src/php
+
+RUN	cd /usr/src/php \
+        && ./configure \
 		--with-config-file-path="$PHP_INI_DIR" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
 		$PHP_EXTRA_CONFIGURE_ARGS \
+                --with-libdir=/lib/x86_64-linux-gnu \
 		--disable-cgi \
 		--with-curl \
 		--with-pcre \
 		--with-readline \
 		--with-recode \
 		--with-zlib \
+                --with-mysql \
+                --with-mysqli \
 	&& make -j"$(nproc)" \
 	&& make install \
 	&& { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
@@ -79,15 +87,14 @@ EXPOSE 80
 
 ## custom
 
-RUN apt-get update \
-    && apt-get install -y libjpeg-dev libpng12-dev libmysqld-dev libpq-dev libmcrypt-dev --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && a2enmod rewrite \
-    && docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
+RUN a2enmod rewrite
+
+RUN docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
-    && pecl install -o -f xdebug-2.2.0 pdo_mysql mysql mysqli \
+    && pecl install -o -f xdebug-2.2.0 pdo_mysql \
     && rm -rf /tmp/pear \
-    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini
+    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20090626/pdo_mysql.so" > /usr/local/etc/php/conf.d/pdo_mysql.ini
 ## end custom
 
 CMD ["apache2-foreground"]
