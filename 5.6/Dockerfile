@@ -1,4 +1,4 @@
-FROM php:5.6.18-apache
+FROM php:5.6.24-apache
 RUN apt-get update \
     && apt-get install -y libcurl4-gnutls-dev libjpeg-dev libpng12-dev libsqlite3-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
