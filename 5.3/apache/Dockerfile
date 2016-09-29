@@ -44,6 +44,7 @@ RUN buildDeps=" \
 		libsqlite3-dev \
 		libssl-dev \
 		libxml2-dev \
+                libfreetype6-dev \
 	" \
 	&& set -x \
 	&& apt-get update \
@@ -89,7 +90,7 @@ EXPOSE 80
 
 RUN a2enmod rewrite
 
-RUN docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
+RUN docker-php-ext-configure gd --enable-gd-native-ttf --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
     && pecl install -o -f xdebug-2.2.0 pdo_mysql \
     && rm -rf /tmp/pear \
