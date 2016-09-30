@@ -90,7 +90,13 @@ EXPOSE 80
 
 RUN a2enmod rewrite
 
-RUN docker-php-ext-configure gd --enable-gd-native-ttf --with-ttf  --with-freetype-dir=/usr --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
+RUN mkdir /usr/include/freetype2/freetype \
+    && ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h \
+    && docker-php-ext-configure gd \
+     --enable-gd-native-ttf \
+     --with-ttf  \
+     --with-freetype-dir=/usr/include/freetype2/ \
+     --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar \
     && pecl install -o -f xdebug-2.2.0 pdo_mysql \
     && rm -rf /tmp/pear \
