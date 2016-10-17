@@ -92,8 +92,7 @@ RUN docker-php-ext-configure gd --with-jpeg-dir=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install pdo_pgsql pgsql mcrypt bcmath zip gd mbstring calendar pdo_mysql \
     && pecl install -o -f xdebug-2.2.0 \
     && rm -rf /tmp/pear \
-    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/pdo_mysql.so" > /usr/local/etc/php/conf.d/pdo_mysql.ini
+    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini
 ## end custom
 
 CMD ["apache2-foreground"]
