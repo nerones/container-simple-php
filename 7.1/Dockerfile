@@ -1,6 +1,6 @@
 FROM php:7.1.3-apache
 RUN apt-get update \
-    && apt-get install -y libcurl4-gnutls-dev libpng12-dev libpq-dev libsqlite3-dev libmcrypt-dev --no-install-recommends \
+    && apt-get install -y libfontconfig libxrender1 libxtst6 libcurl4-gnutls-dev libjpeg-dev libpng12-dev libsqlite3-dev libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite \
     && docker-php-ext-install curl mysqli pdo_pgsql pdo_sqlite pdo_mysql pgsql mcrypt bcmath zip gd mbstring \
