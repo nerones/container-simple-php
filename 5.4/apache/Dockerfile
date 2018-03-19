@@ -61,6 +61,7 @@ RUN	cd /usr/src/php \
 		--with-config-file-path="$PHP_INI_DIR" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
 		$PHP_EXTRA_CONFIGURE_ARGS \
+		--with-openssl \
                 --with-libdir=/lib/x86_64-linux-gnu \
 		--disable-cgi \
 		--with-curl \
