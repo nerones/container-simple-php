@@ -6,7 +6,7 @@ RUN apt-get update \
        libpq-dev libmcrypt-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite
-RUN docker-php-ext-install curl mysqli pdo_pgsql pdo_sqlite pdo_mysql pgsql bcmath zip mbstring \
+RUN docker-php-ext-install curl mysqli pdo_pgsql pdo_sqlite pdo_mysql pgsql bcmath zip mbstring exif \
     && docker-php-ext-install gd \
     && pecl install -o -f xdebug apcu \
     && rm -rf /tmp/pear
