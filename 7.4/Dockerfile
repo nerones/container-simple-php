@@ -7,9 +7,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite
 RUN docker-php-ext-install curl mysqli pdo_pgsql pdo_sqlite pdo_mysql pgsql bcmath zip mbstring exif \
+    && docker-php-ext-configure gd --with-jpeg=usr/lib/x86_64-linux-gnu/ \
     && docker-php-ext-install gd \
     && pecl install -o -f xdebug apcu \
     && rm -rf /tmp/pear
 RUN echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
-    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so\nxdebug.profiler_enable_trigger=1\nxdebug.profiler_output_dir="/var/www/html/tmp"\nxdebug.remote_connect_back=1\nxdebug.remote_enable=1" > /usr/local/etc/php/conf.d/xdebug.ini
+    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so\nxdebug.start_with_request=trigger\nxdebug.output_dir="/var/www/tmp"\nxdebug.discover_client_host=1\nxdebug.mode=debug,profile,develop" > /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./php.ini /usr/local/etc/php/
