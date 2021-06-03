@@ -14,3 +14,9 @@ RUN docker-php-ext-install curl mysqli pdo_pgsql pdo_sqlite pdo_mysql pgsql bcma
 RUN echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so\nxdebug.start_with_request=trigger\nxdebug.output_dir="/var/www/tmp"\nxdebug.discover_client_host=1\nxdebug.mode=debug,profile,develop" > /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./php.ini /usr/local/etc/php/
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer
